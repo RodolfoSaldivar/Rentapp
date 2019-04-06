@@ -1,22 +1,28 @@
 const express = require('express');
-// const cookieSession = require('cookie-session');
-// const passport = require('passport');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 const bodyParser = require('body-parser');
 const sql = require('mssql')
+require('./lib/passportService');
 
 const app = express();
 
 app.use(bodyParser.json());
-// app.use(
-// 	cookieSession({
-// 		maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days, the parameter must be in milliseconds
-// 		keys: [keys.cookieKey]
-// 	})
-// );
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(
+	cookieSession({
+		maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days, the parameter must be in milliseconds
+		keys: ['qwerty']
+	})
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-require('./routes/usuariosRoutes')(app); 
+require('./routes/usersRoutes')(app);
+require('./routes/authRoutes')(app);
+
+app.get('/', (req, res) => {
+	res.send('Pagina Principal');
+});
 
 sql.on('error', err => {
 	console.log('Error general: ', err.message);

@@ -1,21 +1,20 @@
 const bcrypt = require('bcrypt');
 const makeQuery = require('../lib/makeQuery');
-const { azureConf } = require('../config/keys');
-const { usuariosQueries } = require('../lib/queries');
+const { usersQueries } = require('../lib/queries');
 const objectCreator = require('../lib/objectCreator');
-const { usuariosValidator, sendErrors } = require('../lib/middlewares');
+const { auth, usersValidator, sendErrors } = require('../lib/middlewares');
 
 module.exports = (app) => {
 
 //=========================================================================
-//----> GET - Traer Todos
 
 	app.get(
-		'/api/usuarios',
+		'/api/users',
+		auth.isLoggedIn,
 		async (req, res) => {
 			try {
 				const result = await makeQuery(
-					usuariosQueries.traerTodos,
+					usersQueries.getAll,
 					[]
 				);
 				res.send(result);
@@ -26,11 +25,10 @@ module.exports = (app) => {
 	);
 
 //=========================================================================
-//----> POST - Agregar
 
 	app.post(
-		'/api/usuarios',
-		usuariosValidator.agregar,
+		'/api/users',
+		usersValidator.add,
 		sendErrors,
 		async (req, res) => {
 			const { username, password } = req.body;
@@ -41,13 +39,33 @@ module.exports = (app) => {
 					objectCreator('password', 'VarChar', hash)
 				];
 				const result = await makeQuery(
-					usuariosQueries.agregar,
+					usersQueries.add,
 					inputValues
 				);
 				res.send(result[0]);
 			}
 			catch (err) {
 				console.log(err.message);
+			}
+		}
+	);
+
+//=========================================================================
+
+	app.get(
+		'/api/users/:id',
+		async (req, res) => {
+			try {
+				const inputValues = [
+					objectCreator('id', 'Int', req.params.id)
+				];
+				const result = await makeQuery(
+					usersQueries.getById,
+					inputValues
+				);
+				res.send(result[0]);
+			} catch (err) {
+				console.log('Error en catch: ', err.message);
 			}
 		}
 	);

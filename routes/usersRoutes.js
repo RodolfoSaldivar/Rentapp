@@ -19,7 +19,7 @@ module.exports = (app) => {
 				);
 				res.send(result);
 			} catch (err) {
-				console.log('Error en catch: ', err.message);
+				console.log('Get Users: ', err.message);
 			}
 		}
 	);
@@ -45,7 +45,7 @@ module.exports = (app) => {
 				res.send(result[0]);
 			}
 			catch (err) {
-				console.log(err.message);
+				console.log('Post user: ', err.message);
 			}
 		}
 	);
@@ -65,7 +65,7 @@ module.exports = (app) => {
 				);
 				res.send(result[0]);
 			} catch (err) {
-				console.log('Error en catch: ', err.message);
+				console.log('Get user from id ', err.message);
 			}
 		}
 	);

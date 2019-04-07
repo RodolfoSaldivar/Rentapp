@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 sql.on('error', err => {
-	console.log('Error general: ', err.message);
+	console.log('Error SQL general: ', err.message);
 })
 
 const PORT = process.env.PORT || 5000;

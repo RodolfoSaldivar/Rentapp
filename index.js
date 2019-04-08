@@ -3,6 +3,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const sql = require('mssql')
+const { cookieKey } = require('./config/keys');
 require('./lib/passportService');
 
 const app = express();
@@ -11,7 +12,7 @@ app.use(bodyParser.json());
 app.use(
 	cookieSession({
 		maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days, the parameter must be in milliseconds
-		keys: ['qwerty']
+		keys: [cookieKey]
 	})
 );
 app.use(passport.initialize());

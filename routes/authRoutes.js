@@ -19,14 +19,6 @@ module.exports = (app) => {
 		})(req, res, next);
 	});
 
-	// app.post('/api/login',
-	// 	passport.authenticate('local', { failureRedirect: '/error' }),
-	// 	(req, res) => {
-	// 		console.log(req.isAuthenticated());
-	// 		res.send(req.user);
-	// 	}
-	// );
-
 //=========================================================================
 
 	app.get('/api/logout', (req, res) => {

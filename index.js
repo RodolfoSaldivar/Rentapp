@@ -1,8 +1,8 @@
+const sql = require('mssql')
 const express = require('express');
-const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const sql = require('mssql')
+const cookieSession = require('cookie-session');
 const { cookieKey } = require('./config/keys');
 require('./lib/passportService');
 

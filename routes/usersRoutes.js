@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const makeQuery = require('../lib/makeQuery');
 const { usersQueries } = require('../lib/queries');
 const objectCreator = require('../lib/objectCreator');
-const { auth, usersValidator, sendErrors } = require('../lib/middlewares');
+const { auth, usersValidator, sendValidationErrors } = require('../lib/middlewares');
 
 module.exports = (app) => {
 
@@ -29,7 +29,7 @@ module.exports = (app) => {
 	app.post(
 		'/api/users',
 		usersValidator.add,
-		sendErrors,
+		sendValidationErrors,
 		async (req, res) => {
 			const { username, password } = req.body;
 			try {
